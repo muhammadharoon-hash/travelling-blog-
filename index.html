@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Journal — Global Travel Stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #B8860B;
+    --gold-light: #F5EFD6;
+    --gold-dark: #7A5800;
+    --ink: #1A1A18;
+    --ink-muted: #4A4A45;
+    --ink-faint: #8A8A82;
+    --paper: #FAFAF7;
+    --paper-warm: #F4F0E8;
+    --rule: rgba(26,26,24,0.12);
+    --white: #ffffff;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .logo span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+  .nav-links li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .nav-links li a:hover, .nav-links li a.active { color: var(--gold-dark); }
+  .nav-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .search-input {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8125rem;
+    font-family: var(--font-body);
+    border-radius: 2px;
+    outline: none;
+    width: 180px;
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--gold); }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+  .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--ink); margin: 5px 0; transition: 0.3s; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HOME PAGE ── */
+  .hero {
+    background: var(--ink);
+    color: var(--white);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+    font-weight: 500;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    max-width: 780px;
+    margin: 0 auto 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 540px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+  }
+  .hero-cta {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 0.75rem 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: none;
+  }
+  .hero-cta:hover { background: #D4A017; }
+
+  /* FEATURED STRIP */
+  .featured-strip {
+    background: var(--gold-light);
+    border-top: 3px solid var(--gold);
+    border-bottom: 1px solid rgba(184,134,11,0.2);
+    padding: 1rem 2rem;
+  }
+  .featured-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .featured-inner::-webkit-scrollbar { display: none; }
+  .featured-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--gold-dark);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .featured-sep { width: 1px; height: 20px; background: rgba(184,134,11,0.3); flex-shrink: 0; }
+  .featured-tags { display: flex; gap: 0.75rem; flex-shrink: 0; }
+  .ftag {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--gold-dark);
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgba(184,134,11,0.35);
+    border-radius: 2px;
+    white-space: nowrap;
+    transition: background 0.2s;
+    background: transparent;
+  }
+  .ftag:hover { background: rgba(184,134,11,0.12); }
+
+  /* MAIN GRID */
+  .section-wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .view-all {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--gold-dark);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .view-all:hover { text-decoration: underline; }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.75rem;
+  }
+  .card-grid.two-col { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+    overflow: hidden;
+  }
+  .card:hover { box-shadow: 0 8px 32px rgba(26,26,24,0.1); transform: translateY(-3px); }
+
+  .card-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    display: block;
+  }
+  .card-img-placeholder {
+    width: 100%;
+    aspect-ratio: 16/10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+  .card-body { padding: 1.25rem; }
+  .card-region {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--gold-dark);
+    margin-bottom: 0.4rem;
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .card-excerpt {
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--rule);
+    padding-top: 0.75rem;
+  }
+  .card-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 600;
+    background: var(--gold-light);
+    color: var(--gold-dark);
+    flex-shrink: 0;
+  }
+  .card-read-time { margin-left: auto; }
+
+  /* FEATURED LARGE CARD */
+  .featured-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    overflow: hidden;
+    margin-bottom: 1.75rem;
+  }
+  .featured-card:hover { box-shadow: 0 8px 32px rgba(26,26,24,0.1); }
+  .featured-card .card-img-placeholder {
+    aspect-ratio: unset;
+    height: 100%;
+    min-height: 280px;
+  }
+  .featured-card .card-body { padding: 2rem; display: flex; flex-direction: column; justify-content: center; }
+  .featured-card .card-title { font-size: 1.7rem; margin-bottom: 0.75rem; }
+  .featured-card .card-excerpt { font-size: 0.9375rem; }
+  .badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* REGION TABS */
+  .region-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .region-tabs::-webkit-scrollbar { display: none; }
+  .rtab {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .rtab:hover { color: var(--ink); }
+  .rtab.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+
+  /* SIDEBAR LAYOUT */
+  .sidebar-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    align-items: start;
+  }
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .sidebar-widget {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    padding: 1.25rem;
+  }
+  .widget-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .dest-list { list-style: none; }
+  .dest-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  .dest-list li:last-child { border-bottom: none; }
+  .dest-list li:hover { color: var(--gold-dark); }
+  .dest-count {
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+  }
+  .quote-widget blockquote {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+  .quote-widget cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    font-style: normal;
+    color: var(--gold-dark);
+    font-weight: 500;
+  }
+
+  /* ── DESTINATIONS PAGE ── */
+  .destinations-hero {
+    background: var(--ink);
+    color: var(--white);
+    padding: 3.5rem 2rem;
+    text-align: center;
+  }
+  .destinations-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .destinations-hero p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+  }
+  .continent-section { margin-bottom: 3rem; }
+  .continent-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .continent-icon { font-size: 1.5rem; }
+  .continent-name {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .continent-count { font-size: 0.8rem; color: var(--ink-faint); }
+  .dest-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .dest-card:hover { box-shadow: 0 6px 24px rgba(26,26,24,0.08); transform: translateY(-2px); }
+  .dest-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+  .dest-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .dest-desc { font-size: 0.8125rem; color: var(--ink-muted); line-height: 1.5; margin-bottom: 0.5rem; }
+  .dest-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    background: var(--gold-light);
+    color: var(--gold-dark);
+    border: 1px solid rgba(184,134,11,0.25);
+  }
+
+  /* ── ARTICLE PAGE ── */
+  .article-header {
+    background: var(--ink);
+    color: var(--white);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+  }
+  .article-header .card-region { color: var(--gold); margin-bottom: 1rem; font-size: 0.78rem; }
+  .article-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    font-weight: 700;
+    max-width: 720px;
+    margin: 0 auto 1.25rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .article-header .card-meta {
+    justify-content: center;
+    border: none;
+    padding-top: 0;
+    color: rgba(255,255,255,0.5);
+  }
+  .article-body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  .article-lead {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .article-body p { margin-bottom: 1.5rem; font-size: 1.0625rem; line-height: 1.75; }
+  .article-body h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+  }
+  .article-pullquote {
+    border-left: 3px solid var(--gold);
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    margin: 2.5rem 0;
+  }
+  .article-pullquote p {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.45;
+    margin: 0;
+  }
+  .article-img-wide {
+    width: calc(100% + 4rem);
+    margin-left: -2rem;
+    aspect-ratio: 16/7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .article-tip {
+    background: var(--gold-light);
+    border: 1px solid rgba(184,134,11,0.25);
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.25rem;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+  }
+  .tip-label { font-weight: 700; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 0.25rem; }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    cursor: pointer;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .back-btn:hover { color: var(--gold-dark); }
+
+  /* ── ABOUT PAGE ── */
+  .about-hero {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--rule);
+    padding: 4rem 2rem;
+  }
+  .about-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .about-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    border: 3px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    flex-shrink: 0;
+  }
+  .about-hero h1 {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .about-tagline { font-size: 1rem; color: var(--ink-muted); margin-bottom: 1rem; font-style: italic; }
+  .about-stats { display: flex; gap: 2rem; }
+  .stat-item { text-align: center; }
+  .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--gold-dark); display: block; }
+  .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); }
+  .about-content { max-width: 800px; margin: 0 auto; padding: 3rem 2rem; }
+  .about-content h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+  .about-content p { margin-bottom: 1.25rem; color: var(--ink-muted); line-height: 1.75; }
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+  .team-card { background: var(--white); border: 1px solid var(--rule); padding: 1.25rem; text-align: center; }
+  .team-emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .team-name { font-weight: 600; font-size: 0.9375rem; }
+  .team-role { font-size: 0.8125rem; color: var(--ink-faint); }
+  .team-countries { font-size: 0.75rem; color: var(--gold-dark); font-weight: 500; margin-top: 0.25rem; }
+
+  /* ── CONTACT PAGE ── */
+  .contact-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  .contact-wrap h1 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .contact-sub { color: var(--ink-muted); margin-bottom: 2.5rem; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label { display: block; font-size: 0.8125rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .form-input, .form-textarea, .form-select {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.9375rem;
+    font-family: var(--font-body);
+    border: 1px solid var(--rule);
+    background: var(--white);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 2px;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--gold); }
+  .form-textarea { min-height: 140px; resize: vertical; }
+  .submit-btn {
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+    border-radius: 2px;
+  }
+  .submit-btn:hover { background: var(--gold-dark); }
+  .contact-info h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+  .info-item { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 1rem; font-size: 0.9rem; }
+  .info-icon { font-size: 1rem; margin-top: 0.1rem; flex-shrink: 0; }
+  .info-label { font-weight: 500; font-size: 0.8rem; color: var(--ink-faint); display: block; }
+  .success-msg {
+    display: none;
+    background: #EAF5EC;
+    border: 1px solid #4CAF50;
+    color: #2E7D32;
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    border-radius: 2px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.6);
+    padding: 3rem 2rem 2rem;
+    margin-top: 4rem;
+  }
+  .footer-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 1.5rem;
+  }
+  .footer-brand p { font-size: 0.875rem; margin-top: 0.75rem; line-height: 1.6; }
+  .footer-col h4 { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.5rem; }
+  .footer-col ul li a { font-size: 0.875rem; color: rgba(255,255,255,0.5); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--gold); }
+  .footer-bottom { max-width: 1160px; margin: 0 auto; display: flex; justify-content: space-between; font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+
+  /* NEWSLETTER */
+  .newsletter-bar {
+    background: var(--gold);
+    padding: 2rem;
+    text-align: center;
+  }
+  .newsletter-bar h3 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .newsletter-bar p { font-size: 0.875rem; color: rgba(26,26,24,0.7); margin-bottom: 1rem; }
+  .nl-form { display: flex; gap: 0; max-width: 480px; margin: 0 auto; }
+  .nl-input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+    border: none;
+    outline: none;
+    color: var(--ink);
+  }
+  .nl-btn {
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    padding: 0.7rem 1.25rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .nl-btn:hover { background: #333; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .nav-links, .search-input { display: none; }
+    .hamburger { display: block; }
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-card .card-img-placeholder { min-height: 200px; }
+    .sidebar-layout { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .about-inner { grid-template-columns: 1fr; text-align: center; }
+    .about-stats { justify-content: center; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .article-img-wide { width: 100%; margin-left: 0; }
+  }
+  @media (max-width: 480px) {
+    .footer-inner { grid-template-columns: 1fr; }
+    .nl-form { flex-direction: column; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="logo" onclick="showPage('home')">Meridian <span>Journal</span></a>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+      <li><a onclick="showPage('destinations')" id="nav-destinations">Destinations</a></li>
+      <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+      <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+    </ul>
+    <div class="nav-search">
+      <input class="search-input" type="search" placeholder="Search articles…" id="searchInput" oninput="handleSearch(this.value)">
+    </div>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════ HOME PAGE ══════════ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <p class="hero-eyebrow">Est. 2019 · 78 Countries · 400+ Stories</p>
+    <h1>Where <em>curiosity</em> becomes the compass</h1>
+    <p class="hero-sub">Thoughtful travel writing from journalists and storytellers who go deeper than the guidebook.</p>
+    <button class="hero-cta" onclick="showPage('destinations')">Explore Destinations</button>
+  </div>
+
+  <div class="featured-strip">
+    <div class="featured-inner">
+      <span class="featured-label">Trending Now</span>
+      <div class="featured-sep"></div>
+      <div class="featured-tags">
+        <button class="ftag" onclick="filterRegion('Asia')">Asia</button>
+        <button class="ftag" onclick="filterRegion('Europe')">Europe</button>
+        <button class="ftag" onclick="filterRegion('Africa')">Africa</button>
+        <button class="ftag" onclick="filterRegion('Americas')">Americas</button>
+        <button class="ftag" onclick="filterRegion('Oceania')">Oceania</button>
+        <button class="ftag" onclick="filterRegion('Middle East')">Middle East</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-wrap">
+    <div class="sidebar-layout">
+      <main>
+        <!-- Featured -->
+        <div class="section-header">
+          <h2 class="section-title">Editor's Pick</h2>
+          <span class="badge">This Week</span>
+        </div>
+
+        <div class="featured-card" onclick="showArticle('kyoto')">
+          <div class="card-img-placeholder" style="background: linear-gradient(135deg,#2D5016 0%,#4A7C2C 50%,#8BAA5A 100%);">🏯</div>
+          <div class="card-body">
+            <div class="card-region">Asia · Japan</div>
+            <div class="badge">Editor's Pick</div>
+            <div class="card-title">Kyoto's Hidden Temples: A Season of Quiet Discovery</div>
+            <p class="card-excerpt">Beyond the tourists and the cherry blossom calendars, Kyoto keeps a different clock — one measured in incense smoke and raked gravel. We spent three weeks finding its quietest corners.</p>
+            <div class="card-meta">
+              <div class="card-avatar">YK</div>
+              <span>Yuki Kamamoto</span>
+              <span>·</span>
+              <span>June 12, 2025</span>
+              <span class="card-read-time">9 min read</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Region tabs -->
+        <div class="section-header" style="margin-top:2.5rem;">
+          <h2 class="section-title">Latest Stories</h2>
+          <a class="view-all">View all →</a>
+        </div>
+
+        <div class="region-tabs">
+          <button class="rtab active" onclick="setTab('all', this)">All</button>
+          <button class="rtab" onclick="setTab('asia', this)">Asia</button>
+          <button class="rtab" onclick="setTab('europe', this)">Europe</button>
+          <button class="rtab" onclick="setTab('africa', this)">Africa</button>
+          <button class="rtab" onclick="setTab('americas', this)">Americas</button>
+          <button class="rtab" onclick="setTab('oceania', this)">Oceania</button>
+        </div>
+
+        <div class="card-grid" id="articles-grid">
+          <!-- populated by JS -->
+        </div>
+      </main>
+
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <div class="widget-title">Popular Destinations</div>
+          <ul class="dest-list" id="popular-dest">
+            <li onclick="showPage('destinations')"><span>🇯🇵 Japan</span><span class="dest-count">24 stories</span></li>
+            <li onclick="showPage('destinations')"><span>🇮🇹 Italy</span><span class="dest-count">18 stories</span></li>
+            <li onclick="showPage('destinations')"><span>🇲🇦 Morocco</span><span class="dest-count">15 stories</span></li>
+            <li onclick="showPage('destinations')"><span>🇵🇪 Peru</span><span class="dest-count">12 stories</span></li>
+            <li onclick="showPage('destinations')"><span>🇹🇿 Tanzania</span><span class="dest-count">10 stories</span></li>
+            <li onclick="showPage('destinations')"><span>🇮🇳 India</span><span class="dest-count">9 stories</span></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-widget quote-widget">
+          <div class="widget-title">Travel Thought</div>
+          <blockquote>
+            <p>"Not all those who wander are lost — some are just looking for the best bowl of noodles."</p>
+            <cite>— The Meridian Editors</cite>
+          </blockquote>
+        </div>
+
+        <div class="sidebar-widget">
+          <div class="widget-title">Plan Your Trip</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <select class="form-select" style="font-size:0.875rem;">
+              <option>Select a region…</option>
+              <option>Asia</option>
+              <option>Europe</option>
+              <option>Africa</option>
+              <option>Americas</option>
+              <option>Oceania</option>
+              <option>Middle East</option>
+            </select>
+            <select class="form-select" style="font-size:0.875rem;">
+              <option>Travel style…</option>
+              <option>Backpacker</option>
+              <option>Boutique</option>
+              <option>Family</option>
+              <option>Solo</option>
+              <option>Adventure</option>
+            </select>
+            <button class="submit-btn" style="margin-top:0.25rem;" onclick="showPage('destinations')">Find Stories</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ DESTINATIONS PAGE ══════════ -->
+<div class="page" id="page-destinations">
+  <div class="destinations-hero">
+    <h1>Explore the World</h1>
+    <p>78 countries · 6 continents · Infinite stories</p>
+  </div>
+
+  <div class="section-wrap">
+    <div class="continent-section">
+      <div class="continent-header">
+        <span class="continent-icon">🌏</span>
+        <span class="continent-name">Asia</span>
+        <span class="continent-count">32 destinations</span>
+      </div>
+      <div class="card-grid">
+        <div class="dest-card" onclick="showArticle('kyoto')">
+          <div class="dest-emoji">🏯</div>
+          <div class="dest-name">Kyoto, Japan</div>
+          <div class="dest-desc">Ancient temples, bamboo forests, and a tea ceremony culture that slows the world down.</div>
+          <span class="dest-tag">Culture</span>
+        </div>
+        <div class="dest-card" onclick="showArticle('vietnam')">
+          <div class="dest-emoji">🛶</div>
+          <div class="dest-name">Ha Long Bay, Vietnam</div>
+          <div class="dest-desc">Limestone karsts rise from emerald waters in one of Southeast Asia's most dramatic seascapes.</div>
+          <span class="dest-tag">Nature</span>
+        </div>
+        <div class="dest-card" onclick="showArticle('rajasthan')">
+          <div class="dest-emoji">🏰</div>
+          <div class="dest-name">Rajasthan, India</div>
+          <div class="dest-desc">Palaces, deserts, and a riot of colour that changes with every hour of light.</div>
+          <span class="dest-tag">Heritage</span>
+        </div>
+        <div class="dest-card" onclick="showArticle('bali')">
+          <div class="dest-emoji">🌺</div>
+          <div class="dest-name">Bali, Indonesia</div>
+          <div class="dest-desc">Where rice terraces cascade down volcanic hillsides and every village holds a ceremony.</div>
+          <span class="dest-tag">Spiritual</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="continent-section">
+      <div class="continent-header">
+        <span class="continent-icon">🌍</span>
+        <span class="continent-name">Africa</span>
+        <span class="continent-count">18 destinations</span>
+      </div>
+      <div class="card-grid">
+        <div class="dest-card" onclick="showArticle('morocco')">
+          <div class="dest-emoji">🕌</div>
+          <div class="dest-name">Marrakech, Morocco</div>
+          <div class="dest-desc">The medina's labyrinthine streets conceal rooftop cafes, souks piled with saffron, and carved cedar doors.</div>
+          <span class="dest-tag">City</span>
+        </div>
+        <div class="dest-card" onclick="showArticle('serengeti')">
+          <div class="dest-emoji">🦁</div>
+          <div class="dest-name">Serengeti, Tanzania</div>
+          <div class="dest-desc">Two million wildebeest and the oldest migration on earth — witnessed in silence from a camp at dawn.</div>
+          <span class="dest-tag">Wildlife</span>
+        </div>
+        <div class="dest-card">
+          <div class="dest-emoji">🏔️</div>
+          <div class="dest-name">Cape Town, South Africa</div>
+          <div class="dest-desc">Mountain, ocean, vineyard, and city all within twenty minutes of each other.</div>
+          <span class="dest-tag">Urban</span>
+        </div>
+        <div class="dest-card">
+          <div class="dest-emoji">🌊</div>
+          <div class="dest-name">Zanzibar, Tanzania</div>
+          <div class="dest-desc">Turquoise shallows, spice markets, and a Stone Town that layers Persian, Arab, and Swahili histories.</div>
+          <span class="dest-tag">Island</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="continent-section">
+      <div class="continent-header">
+        <span class="continent-icon">🌎</span>
+        <span class="continent-name">Americas</span>
+        <span class="continent-count">16 destinations</span>
+      </div>
+      <div class="card-grid">
+        <div class="dest-card" onclick="showArticle('patagonia')">
+          <div class="dest-emoji">🏔️</div>
+          <div class="dest-name">Patagonia, Chile</div>
+          <div class="dest-desc">The last frontier of the south: glaciers, condors, and granite spires at the edge of the world.</div>
+          <span class="dest-tag">Adventure</span>
+        </div>
+        <div class="dest-card">
+          <div class="dest-emoji">🎶</div>
+          <div class="dest-name">Medellín, Colombia</div>
+          <div class="dest-desc">A city that rewrote its story — now a model of transformation, creativity, and extraordinary coffee.</div>
+          <span class="dest-tag">Urban</span>
+        </div>
+        <div class="dest-card">
+          <div class="dest-emoji">🌿</div>
+          <div class="dest-name">Amazon, Brazil</div>
+          <div class="dest-desc">The lungs of the planet: river dolphins, flooded forests, and a biodiversity that defies comprehension.</div>
+          <span class="dest-tag">Nature</span>
+        </div>
+        <div class="dest-card">
+          <div class="dest-emoji">🏜️</div>
+          <div class="dest-name">Atacama, Chile</div>
+          <div class="dest-desc">The driest desert on earth by day — and the clearest night sky anywhere on the planet.</div>
+          <span class="dest-tag">Astro</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="continent-section">
+      <div class="continent-header">
+        <span class="continent-icon">🌍</span>
+        <span class="continent-name">Europe</span>
+        <span class="continent-count">28 destinations</span>
+      </div>
+      <div class="card-grid">
+        <div class="dest-card" onclick="showArticle('portugal')">
+          <div class="dest-emoji">🌊</div>
+          <div class="dest-name">Alentejo, Portugal</div>
+          <div class="dest-desc">Sunlit plains, cork oaks, and whitewashed villages that time appears to have bypassed deliberately.</div>
+          <span class="dest-tag">Rural</span>
+        </div>
+        <div class="dest-card">
+          <div class="dest-emoji">🏔️</div>
+          <div class="dest-name">Dolomites, Italy</div>
+          <div class="dest-desc">Pink at dawn, bone-white by noon — the Dolomites are geology as theatre.</div>
+          <span class="dest-tag">Nature</span>
+        </div>
+        <div class="dest-card">
+          <div class="dest-emoji">🏛️</div>
+          <div class="dest-name">Athens, Greece</div>
+          <div class="dest-desc">Beneath every backstreet taverna lie 3,000 years of history waiting to be read aloud.</div>
+          <span class="dest-tag">History</span>
+        </div>
+        <div class="dest-card">
+          <div class="dest-emoji">🌅</div>
+          <div class="dest-name">Faroe Islands</div>
+          <div class="dest-desc">Edge-of-the-world drama: waterfalls falling into the sea, puffins, and no crowds.</div>
+          <span class="dest-tag">Remote</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ ARTICLE PAGE ══════════ -->
+<div class="page" id="page-article">
+  <div id="article-content"><!-- populated by JS --></div>
+</div>
+
+<!-- ══════════ ABOUT PAGE ══════════ -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="about-inner">
+      <div class="about-avatar">✈️</div>
+      <div>
+        <h1>We believe travel is reading the world</h1>
+        <p class="about-tagline">Independent journalism, no sponsored itineraries</p>
+        <div class="about-stats">
+          <div class="stat-item"><span class="stat-num">78</span><span class="stat-label">Countries</span></div>
+          <div class="stat-item"><span class="stat-num">14</span><span class="stat-label">Writers</span></div>
+          <div class="stat-item"><span class="stat-num">400+</span><span class="stat-label">Stories</span></div>
+          <div class="stat-item"><span class="stat-num">6yr</span><span class="stat-label">Publishing</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-content">
+    <h2>Our story</h2>
+    <p>Meridian Journal was founded in 2019 by a group of journalists who believed travel writing had become too curated, too sponsored, and too safe. We wanted to go back to the original form: a writer, a notebook, and an honest account of what they actually found.</p>
+    <p>We accept no press trips, no freebies, and no promotional arrangements. Every story is funded by reader subscriptions and editorial independence is the only thing we won't compromise on.</p>
+    <p>Our writers have collectively lived in — not just visited — 41 countries. We think that distinction matters. The difference between a week-long itinerary and a year spent in a neighbourhood shows up on the page.</p>
+
+    <h2 style="margin-top:2.5rem;">The team</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-emoji">👩‍💼</div>
+        <div class="team-name">Sofia Reyes</div>
+        <div class="team-role">Editor in Chief</div>
+        <div class="team-countries">Mexico · Spain · Morocco</div>
+      </div>
+      <div class="team-card">
+        <div class="team-emoji">👨‍✈️</div>
+        <div class="team-name">Marcus Webb</div>
+        <div class="team-role">Africa & Middle East</div>
+        <div class="team-countries">Kenya · Egypt · Jordan</div>
+      </div>
+      <div class="team-card">
+        <div class="team-emoji">👩‍🎨</div>
+        <div class="team-name">Yuki Kamamoto</div>
+        <div class="team-role">Asia Correspondent</div>
+        <div class="team-countries">Japan · Vietnam · Bhutan</div>
+      </div>
+      <div class="team-card">
+        <div class="team-emoji">🧳</div>
+        <div class="team-name">Luca Ferretti</div>
+        <div class="team-role">Europe & Americas</div>
+        <div class="team-countries">Italy · Chile · Portugal</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CONTACT PAGE ══════════ -->
+<div class="page" id="page-contact">
+  <div class="contact-wrap">
+    <h1>Get in Touch</h1>
+    <p class="contact-sub">Pitching a story, asking about a destination, or just want to say hello — we read every message.</p>
+
+    <div class="contact-grid">
+      <div>
+        <div class="form-group">
+          <label class="form-label">Your name</label>
+          <input class="form-input" type="text" placeholder="e.g. Sarah Ahmed" id="cf-name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input class="form-input" type="email" placeholder="sarah@example.com" id="cf-email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <select class="form-select" id="cf-subject">
+            <option value="">Select a topic…</option>
+            <option>Story pitch</option>
+            <option>Destination question</option>
+            <option>Partnership enquiry</option>
+            <option>General feedback</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell us what's on your mind…" id="cf-message"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitForm()">Send Message</button>
+        <div class="success-msg" id="form-success">✓ Message sent! We typically reply within 2 business days.</div>
+      </div>
+
+      <div class="contact-info">
+        <h3>Other ways to reach us</h3>
+        <div class="info-item">
+          <span class="info-icon">📧</span>
+          <div>
+            <span class="info-label">Editorial</span>
+            editors@meridianjournal.com
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">✍️</span>
+          <div>
+            <span class="info-label">Story pitches</span>
+            pitches@meridianjournal.com
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🤝</span>
+          <div>
+            <span class="info-label">Partnerships</span>
+            partnerships@meridianjournal.com
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">⏱️</span>
+          <div>
+            <span class="info-label">Response time</span>
+            Usually within 2 business days
+          </div>
+        </div>
+
+        <div style="margin-top:2rem; padding: 1.25rem; background: var(--gold-light); border-left: 3px solid var(--gold);">
+          <div style="font-weight:700; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:0.4rem;">Write for Us</div>
+          <p style="font-size:0.875rem; color:var(--ink-muted); line-height:1.6; margin:0;">We accept pitches from experienced travel writers. Include a destination, your angle, and two published clips.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-bar">
+  <h3>Stay curious. Travel deeper.</h3>
+  <p>One weekly dispatch — no fluff, just our best new story and one underrated place.</p>
+  <div class="nl-form">
+    <input class="nl-input" type="email" placeholder="Your email address" id="nl-email">
+    <button class="nl-btn" onclick="subscribeNewsletter()">Subscribe</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo" style="color:white; cursor:default;">Meridian <span>Journal</span></div>
+      <p>Independent travel writing from journalists who actually live in the places they cover. No press trips, no sponsored content, no compromises.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a onclick="showPage('destinations')">All Destinations</a></li>
+        <li><a onclick="filterRegion('Asia')">Asia</a></li>
+        <li><a onclick="filterRegion('Europe')">Europe</a></li>
+        <li><a onclick="filterRegion('Africa')">Africa</a></li>
+        <li><a onclick="filterRegion('Americas')">Americas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Journal</h4>
+      <ul>
+        <li><a>Latest Stories</a></li>
+        <li><a>Editor's Picks</a></li>
+        <li><a>Photo Essays</a></li>
+        <li><a>Travel Guides</a></li>
+        <li><a>Podcast</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <ul>
+        <li><a onclick="showPage('about')">Our Story</a></li>
+        <li><a onclick="showPage('about')">The Team</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+        <li><a onclick="showPage('contact')">Write for Us</a></li>
+        <li><a>Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Meridian Journal. All rights reserved.</span>
+    <span>Made with curiosity &amp; strong coffee ☕</span>
+  </div>
+</footer>
+
+<script>
+const articles = [
+  {
+    id: 'kyoto', region: 'asia', regionLabel: 'Asia · Japan',
+    title: "Kyoto's Hidden Temples: A Season of Quiet Discovery",
+    excerpt: "Beyond the tourists and the cherry blossom calendars, Kyoto keeps a different clock — measured in incense smoke and raked gravel.",
+    author: 'Yuki Kamamoto', authorInitials: 'YK', date: 'June 12, 2025', readTime: '9 min',
+    emoji: '🏯', bg: 'linear-gradient(135deg,#2D5016,#4A7C2C,#8BAA5A)',
+    lead: "Kyoto does not reveal itself quickly. The city's famous temples — Fushimi Inari's vermilion gates, Kinkakuji's golden reflection — absorb the crowds so completely that what remains, once you leave the tourist trail, is almost shockingly quiet.",
+    content: [
+      { type: 'p', text: "It was my third morning at Ryoanji when I stopped looking for something to photograph. The famous rock garden — fifteen stones arranged in white gravel that rakes in perfect parallel lines — is one of the most analysed compositions in Zen art. Scholars have argued for centuries about its meaning. But that morning, in the first cold light of February, there were only four of us on the wooden viewing platform, and the garden simply was." },
+      { type: 'h2', text: "Off the pilgrim path" },
+      { type: 'p', text: "Arashiyama, the bamboo grove district in Kyoto's western hills, draws perhaps ten thousand visitors on a peak autumn day. Walk twenty minutes north along the Oi River and you'll find Jojakko-ji, a hillside temple where the pagoda is visible only from one moss-covered staircase, and where the entire visit might contain just two other people." },
+      { type: 'pullquote', text: "The moss at Saihoji has been growing for seven centuries. You are not walking on it. You are walking beside it, slowly, with a calligraphy brush in your hand." },
+      { type: 'p', text: "Getting into Saihoji, also known as Kokedera or the Moss Temple, requires a written application weeks in advance and a small ceremony of copying sutras before you're permitted to walk the garden. The process is deliberately exclusive — not elitist, but protective. The moss here is a living artwork, and it wants nothing from you." },
+      { type: 'h2', text: "What the slow season gives you" },
+      { type: 'p', text: "February in Kyoto is cold enough that your breath shows. The tourist numbers drop by perhaps sixty percent from October's peak. What opens up isn't just physical space — it's temporal space. You can sit in front of a garden for an hour without someone asking to take a photo in the same spot." },
+      { type: 'tip', title: 'Practical Note', text: 'The Philosopher\'s Path is best walked in early morning (before 8am) even in peak season. In February, you may have it entirely to yourself. Dress for 3°C and bring cash — many smaller temples are cash-only.' },
+      { type: 'p', text: "On my last evening, I walked the length of the Philosopher's Path as the light disappeared behind the Higashiyama mountains. The canal beside the path carries water from Lake Biwa, and it runs so clear that you can count the stones at the bottom. A grey heron stood in it, completely still, as if installed." }
+    ]
+  },
+  {
+    id: 'morocco', region: 'africa', regionLabel: 'Africa · Morocco',
+    title: "Inside Marrakech's Medina: Getting Purposefully Lost",
+    excerpt: "The souks of Marrakech do not yield to plans. They yield to patience, and to accepting that getting lost is the point.",
+    author: 'Marcus Webb', authorInitials: 'MW', date: 'May 28, 2025', readTime: '7 min',
+    emoji: '🕌', bg: 'linear-gradient(135deg,#7A2D0F,#C4522A,#E8A060)',
+    lead: "The medina of Marrakech is one of the largest urban pedestrian zones in the world — a maze of approximately 93,000 inhabitants, 9,000 alleyways, and no reliable map.",
+    content: [
+      { type: 'p', text: "The man selling leather babouches at the entrance to the Souk Semmarine told me I was going the wrong way. He was, of course, correct — but the wrong way led me through the copper-beaters' souk, where a dozen craftsmen hammered lanterns into existence in a sound like horizontal rain, and from there into a courtyard where a woman was dyeing silk threads the colour of pomegranates." },
+      { type: 'h2', text: "The hierarchy of the souks" },
+      { type: 'p', text: "The souks are not randomly arranged. There is an economic geography at work: the spice merchants cluster near the Jemaa el-Fna square because spices attracted traders first. Goldsmiths are close to the mosque. Tanners — whose work produces powerful smells — are at the edge. Learn this logic and the medina starts to make sense as a living city rather than a tourist attraction." },
+      { type: 'pullquote', text: "At Café de France, looking down at the Jemaa el-Fna at dusk, the square transforms. The food stalls emerge, the storytellers take their positions, and you suddenly understand why UNESCO called this an Intangible Cultural Heritage." },
+      { type: 'tip', title: 'Local Tip', text: "For the best traditional harira soup, avoid the restaurants facing the Jemaa el-Fna directly. Walk one street back and look for places with handwritten menus in Arabic and Darija — the pricing halves and the quality doubles." },
+      { type: 'p', text: "I spent eleven days in Marrakech and by the end could navigate three routes through the medina reliably. A resident I met who'd lived there thirty years told me she still discovers alleys she doesn't recognise. The medina doesn't let you finish knowing it." }
+    ]
+  },
+  {
+    id: 'patagonia', region: 'americas', regionLabel: 'Americas · Chile',
+    title: "At the Edge of the World: Walking Patagonia's W Circuit",
+    excerpt: "Five days, 80 kilometres, and granite spires that appear and disappear in cloud like something that doesn't want to be seen.",
+    author: 'Luca Ferretti', authorInitials: 'LF', date: 'May 15, 2025', readTime: '11 min',
+    emoji: '🏔️', bg: 'linear-gradient(135deg,#0A2540,#1A4A7A,#4A8FBF)',
+    lead: "The Torres del Paine are perhaps the most photographed mountain formation in the Americas. This does nothing to prepare you for seeing them for the first time at dawn.",
+    content: [
+      { type: 'p', text: "On the fourth morning of the W Circuit, I left Camp Chileno at 4:30am in total darkness with a head torch, two layers, and a thermos of instant coffee that had long since gone cold. The trail to Mirador Las Torres — the lookout directly beneath the three granite spires — takes about 45 minutes in daylight. In darkness, over moraine, it took nearly ninety." },
+      { type: 'h2', text: "The morning light on the towers" },
+      { type: 'p', text: "The Torres are made of Cretaceous granite, pushed up through older rock by tectonic forces. What makes them extraordinary is not their height — they top out around 2,800 metres — but their verticality and colour. At sunrise the rock turns from grey to gold to pink to white in about twenty minutes. It's not gradual. It happens in visible stages, as if someone is adjusting the exposure." },
+      { type: 'pullquote', text: "Patagonian weather has its own logic: you might get four seasons in a single hour. Experienced hikers say: if the mountains are out, stop walking and look." },
+      { type: 'tip', title: 'Planning Note', text: "Book refugio accommodation 6–9 months in advance for the November–March season. The W Circuit runs roughly east to west; doing it west to east means you hike toward the towers for a climactic final morning. Free camping is available at specific sites — Torres del Paine regulations change annually, so verify with CONAF before booking." },
+      { type: 'p', text: "On the final descent from Mirador Britannico on day five, I walked through a beech forest where the wind off the Southern Patagonian Ice Field hit the canopy from above and made a sound like the sea. I've never been to a place that felt more conclusively like the end of something." }
+    ]
+  },
+  {
+    id: 'portugal', region: 'europe', regionLabel: 'Europe · Portugal',
+    title: "Alentejo Slow: The Portugal Most Visitors Never Find",
+    excerpt: "South of Lisbon, the land flattens into cork and gold. A region where the correct pace is a half-finished glass of wine and no agenda.",
+    author: 'Luca Ferretti', authorInitials: 'LF', date: 'April 30, 2025', readTime: '8 min',
+    emoji: '🌾', bg: 'linear-gradient(135deg,#5A3A1A,#A06030,#D4A060)',
+    lead: "The Alentejo occupies roughly a third of Portugal's land area and receives approximately three percent of its tourists. This proportion is, from the region's perspective, exactly right.",
+    content: [
+      { type: 'p', text: "My guesthouse in Monsaraz was run by a couple who had moved from Lisbon fifteen years ago with the explicit intention of doing things more slowly. Breakfast was served when it was ready, which was a different time each morning, and no one apologised for this. The dining room looked out over a valley where Portugal and Spain are separated by the Guadiana river and where, on clear mornings, you can see Spain from your coffee cup." },
+      { type: 'h2', text: "The wine that barely left the region" },
+      { type: 'p', text: "Alentejo wines have only become seriously international in the last two decades. Before that, most of what was produced here stayed within Portugal — the thick, structured reds from Reguengos de Monsaraz and Borba weren't built for export, they were built for the long lunch. Sitting in a quinta with the winemaker, watching dust motes in the cellar light, drinking a Trincadeira that had been open for two hours, I began to understand what wine made without ambition tastes like." },
+      { type: 'pullquote', text: "There is a word in Portuguese — sossego — that means something like quietness, but also easiness. The Alentejo is built on sossego the way the north is built on granite." },
+      { type: 'tip', title: 'When to Visit', text: "April–June and September–October are ideal: wildflowers in spring, harvests in autumn. July–August is genuinely hot (40°C+) and some places close. The Alentejo is excellent by car — distances between towns are comfortable, roads are empty, and spontaneous stops at roadside adega (wine shops) are a reliable pleasure." },
+      { type: 'p', text: "I left Monsaraz on a Thursday afternoon with no particular plan for the evening. I drove west through cork oak country for an hour, stopped at a village where there was only a church, a café, and a man selling watermelons from a van, and bought a watermelon I didn't need. It was one of the better decisions of the trip." }
+    ]
+  },
+  {
+    id: 'serengeti', region: 'africa', regionLabel: 'Africa · Tanzania',
+    title: "The Silence of the Serengeti: Safari Without the Crowds",
+    excerpt: "The great migration brings a million wildebeest — and, increasingly, a million cameras. Here's how to find the version that feels like wilderness.",
+    author: 'Marcus Webb', authorInitials: 'MW', date: 'April 18, 2025', readTime: '10 min',
+    emoji: '🦁', bg: 'linear-gradient(135deg,#3A2D0A,#6A5020,#C49040)',
+    lead: "The Serengeti ecosystem covers 30,000 square kilometres. The section most visitors see, the central Seronera valley, covers about 200. This is where to start if you want to understand what the other 99.3% feels like.",
+    content: [
+      { type: 'p', text: "Our guide, Emmanuel, had worked the northern Serengeti for nineteen years. He spoke about specific animals by name — not because he anthropomorphised them, but because he had tracked individual lions long enough that he could distinguish them by ear notch and scar. The morning he found a cheetah coalition of three brothers he hadn't seen in eight months, he was visibly, quietly, happy." },
+      { type: 'h2', text: "The northern migration route" },
+      { type: 'p', text: "Between July and October, the wildebeest herd crosses the Mara River from Tanzania into Kenya and back again in what is called the 'great migration' — though calling it a migration implies a purposeful direction that the animals don't have. They follow grass. The grass follows rain. The result, incidentally, is one of the largest movements of biomass on the planet." },
+      { type: 'pullquote', text: "A crossing lasts anywhere from four minutes to four hours. The wildebeest work themselves into a state of anxious circling, then one individual commits, and in minutes thousands follow. Then it stops. Then it starts again." },
+      { type: 'tip', title: 'Practical Advice', text: "The northern Serengeti (Lamai and Klein's Camp areas) has a fraction of the vehicles present at Seronera during peak migration season. Mid-range camps here cost more than central Serengeti alternatives, but the ratio of vehicles to animals makes the experience categorically different. Book 10–12 months ahead for July–August." },
+      { type: 'p', text: "On our last morning, Emmanuel parked the Land Cruiser on a small rise and turned the engine off. We sat for forty minutes without moving while a pride of twelve lions — five adults, seven cubs of various ages — moved through the long grass fifty metres away. No other vehicles. The cubs tried to climb their mothers. A juvenile male batted at a butterfly. I wrote nothing in my notebook." }
+    ]
+  },
+  {
+    id: 'vietnam', region: 'asia', regionLabel: 'Asia · Vietnam',
+    title: "Ha Long Bay After the Cruise Ships: The Lan Ha Alternative",
+    excerpt: "The most iconic seascape in Southeast Asia is also one of the most crowded. Fifteen minutes south by boat is a version with half the visitors.",
+    author: 'Yuki Kamamoto', authorInitials: 'YK', date: 'April 5, 2025', readTime: '6 min',
+    emoji: '🛶', bg: 'linear-gradient(135deg,#0A3A3A,#1A6A6A,#4AAFAF)',
+    lead: "Ha Long Bay has 1,969 islands and islets. The area designated as a UNESCO World Heritage Site covers roughly 1,500 square kilometres. On a Saturday in November, approximately 500 boats operate in a zone perhaps a tenth of that size.",
+    content: [
+      { type: 'p', text: "We departed Cat Ba island at 7am in a wooden junk that had been operating since 1994 and showed it, pleasantly. By 7:30 we were in Lan Ha Bay — technically a different body of water, administered differently, with a quarter of the boat traffic. The karsts here are lower and denser. Some are hollow." },
+      { type: 'h2', text: "Kayaking into the dark" },
+      { type: 'p', text: "Several of the limestone formations in Lan Ha contain 'dark caves' — internal lagoons accessible only through small openings near the waterline that you must paddle through horizontally. Inside, the noise of the bay disappears. Light enters as a pale green glow from below the waterline where the passage is still open. It takes about thirty seconds to cross, and on the other side is an enclosed lagoon with nesting swifts and walls that curve 30 metres overhead." },
+      { type: 'pullquote', text: "The swiftlet nests here are harvested twice a year. Birds'-nest soup, which sells in Hanoi for the equivalent of $30 a bowl, starts in a cave like this one." },
+      { type: 'tip', title: 'Getting There', text: "Take the Cat Ba Express ferry from Haiphong or a direct boat from Hanoi's Tuan Chau port. Cat Ba town is the base for Lan Ha Bay access. A full day kayaking trip from Cat Ba costs roughly $25–40 USD — dramatically less than equivalent Ha Long Bay tours and, at time of writing, significantly less crowded." },
+      { type: 'p', text: "We spent two hours in the bay after returning from the cave, floating in a spot between two karsts where the water was the colour of tea glass. A local fisherman's boat passed at a distance, traps on the stern. The wake reached us eventually, rocking the kayak gently, and we didn't speak for a long time." }
+    ]
+  }
+];
+
+let currentTab = 'all';
+let searchQuery = '';
+let mobileMenuOpen = false;
+
+function renderArticleCards(filter = 'all') {
+  const grid = document.getElementById('articles-grid');
+  const filtered = filter === 'all' ? articles : articles.filter(a => a.region === filter);
+  const searched = searchQuery ? filtered.filter(a =>
+    a.title.toLowerCase().includes(searchQuery) ||
+    a.excerpt.toLowerCase().includes(searchQuery) ||
+    a.regionLabel.toLowerCase().includes(searchQuery)
+  ) : filtered;
+
+  if (searched.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--ink-faint);">No stories found for that search.</div>`;
+    return;
+  }
+
+  grid.innerHTML = searched.map(a => `
+    <div class="card" onclick="showArticle('${a.id}')">
+      <div class="card-img-placeholder" style="background:${a.bg};">${a.emoji}</div>
+      <div class="card-body">
+        <div class="card-region">${a.regionLabel}</div>
+        <div class="card-title">${a.title}</div>
+        <p class="card-excerpt">${a.excerpt}</p>
+        <div class="card-meta">
+          <div class="card-avatar">${a.authorInitials}</div>
+          <span>${a.author}</span>
+          <span>·</span>
+          <span>${a.date}</span>
+          <span class="card-read-time">${a.readTime} read</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll('.rtab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderArticleCards(tab);
+}
+
+function handleSearch(val) {
+  searchQuery = val.toLowerCase().trim();
+  renderArticleCards(currentTab);
+}
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showArticle(id) {
+  const a = articles.find(x => x.id === id);
+  if (!a) return;
+
+  let bodyHTML = `<p class="article-lead">${a.lead}</p>`;
+  a.content.forEach(block => {
+    if (block.type === 'p') bodyHTML += `<p>${block.text}</p>`;
+    else if (block.type === 'h2') bodyHTML += `<h2>${block.text}</h2>`;
+    else if (block.type === 'pullquote') bodyHTML += `<div class="article-pullquote"><p>${block.text}</p></div>`;
+    else if (block.type === 'tip') bodyHTML += `<div class="article-tip"><div class="tip-label">${block.title}</div>${block.text}</div>`;
+    else if (block.type === 'img') bodyHTML += `<div class="article-img-wide" style="background:${block.bg};">${block.emoji}</div>`;
+  });
+
+  document.getElementById('article-content').innerHTML = `
+    <div class="article-header">
+      <div class="card-region">${a.regionLabel}</div>
+      <h1>${a.title}</h1>
+      <div class="card-meta">
+        <div class="card-avatar">${a.authorInitials}</div>
+        <span>${a.author}</span>
+        <span>·</span>
+        <span>${a.date}</span>
+        <span class="card-read-time">${a.readTime} read</span>
+      </div>
+    </div>
+    <div class="article-body">
+      <a class="back-btn" onclick="history.back(); showPage('home')">← Back to stories</a>
+      ${bodyHTML}
+      <div style="margin-top:3rem; padding-top:2rem; border-top:1px solid var(--rule);">
+        <p style="font-size:0.875rem; color:var(--ink-faint);">Written by <strong>${a.author}</strong> · Published ${a.date}</p>
+      </div>
+    </div>
+  `;
+
+  showPage('article');
+}
+
+function filterRegion(region) {
+  showPage('home');
+  const regionMap = { 'Asia': 'asia', 'Europe': 'europe', 'Africa': 'africa', 'Americas': 'americas', 'Oceania': 'oceania', 'Middle East': 'middleeast' };
+  const r = regionMap[region] || 'all';
+  document.querySelectorAll('.rtab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.rtab').forEach(t => {
+    if (t.textContent.toLowerCase() === region.toLowerCase()) t.classList.add('active');
+  });
+  currentTab = r;
+  renderArticleCards(r);
+}
+
+function toggleMobileMenu() {
+  mobileMenuOpen = !mobileMenuOpen;
+  const links = document.querySelector('.nav-links');
+  const search = document.querySelector('.search-input');
+  if (mobileMenuOpen) {
+    links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--rule);padding:1rem;z-index:200;';
+    search.style.cssText = 'display:block;width:calc(100% - 4rem);margin:0 2rem 1rem;';
+  } else {
+    links.style.cssText = 'display:none;';
+    search.style.cssText = 'display:none;';
+  }
+}
+
+function subscribeNewsletter() {
+  const el = document.getElementById('nl-email');
+  if (!el.value || !el.value.includes('@')) {
+    el.style.borderBottom = '2px solid red';
+    el.focus();
+    return;
+  }
+  el.style.borderBottom = '';
+  el.value = '';
+  el.placeholder = '✓ You\'re subscribed!';
+  setTimeout(() => { el.placeholder = 'Your email address'; }, 4000);
+}
+
+function submitForm() {
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const msg = document.getElementById('cf-message').value.trim();
+  if (!name || !email || !msg) {
+    alert('Please fill in your name, email, and message.');
+    return;
+  }
+  document.getElementById('form-success').style.display = 'block';
+  document.getElementById('cf-name').value = '';
+  document.getElementById('cf-email').value = '';
+  document.getElementById('cf-subject').value = '';
+  document.getElementById('cf-message').value = '';
+  setTimeout(() => { document.getElementById('form-success').style.display = 'none'; }, 6000);
+}
+
+renderArticleCards('all');
+</script>
+</body>
+</html>
